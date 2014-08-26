@@ -8,6 +8,7 @@
 
 function ElementalPuzzle(){
    this.board = null;
+   this.board_size = null;
    this.first_selected = null;
    this.last_selected = null;
    this.valid_moviments = {
@@ -66,21 +67,46 @@ ElementalPuzzle.prototype = {
       this.first_selected = null;
       this.last_selected = null;
 
-      this._check_victory();
+      if(this._check_victory()){
+         alert("Você Ganhou");
+      }
 
    },
 
    _check_victory: function(){
       var points = 0;
-      if (this.board[0][0] == 1 && this.board[0][1] == 1 && this.board[0][2] == 1 && this.board[0][3] == 1 ){
-         if (this.board[1][0] == 2 && this.board[1][1] == 2 && this.board[1][2] == 2 && this.board[1][3] == 2 ){
-            if (this.board[2][0] == 3 && this.board[2][1] == 3 && this.board[2][2] == 3 && this.board[2][3] == 3 ){
-               if (this.board[3][0] == 4 && this.board[3][1] == 4 && this.board[3][2] == 4 && this.board[3][3] == 4 ){
-                  alert("Você Ganhou");
-               }
-            }
+
+      //Check Area 1
+      for (var i = 0; i < this.board_size; i++){
+         if (this.board[0][i] != 1){
+            return false;
          }
       }
+
+      //Check Area 2
+      for (var i = 0; i < this.board_size; i++){
+         if (this.board[1][i] != 2){
+            return false;
+         }
+      }
+
+      //Check Area 3
+      for (var i = 0; i < this.board_size; i++){
+         if (this.board[2][i] != 3){
+            return false;
+         }
+      }
+
+      //Check Area 4
+      for (var i = 0; i < this.board_size; i++){
+         if (this.board[3][i] != 4){
+            return false;
+         }
+      }
+
+      //All areas are OK
+      return true;
+
    },
    _bind_events: function(){
       var self = this;
@@ -94,14 +120,15 @@ ElementalPuzzle.prototype = {
                self.process_move();
             } else {
                alert("Ilegal Move");
-               this.first_selected = null;
-               this.last_selected = null;
+               self.first_selected = null;
+               self.last_selected = null;
             }
          }
       });
    },
    //This function start a Board like a matrix. This is a representation of pieces in game.
    start_board: function(size){
+      this.board_size = size;
 
     /*  this.board = [
          [1, 1, 1, 1],
@@ -121,6 +148,12 @@ ElementalPuzzle.prototype = {
       this.board = [];
 
       var pieces_enabled = [1, 2, 3, 4];
+      var pieces_controll = {
+         "1" : 0,
+         "2" : 0,
+         "3" : 0,
+         "4" : 0
+      };
       var pieces_status = [0, 0, 0, 0]
 
       for (var i = 0; i < size; i++){
@@ -129,19 +162,39 @@ ElementalPuzzle.prototype = {
 
          for (var j = 0; j < size; j++){
 
-            var piece = Math.floor(Math.random() * 4);
+            //var piece = Math.floor(Math.random() * 4); CUrrent
+            var piece_index = Math.floor(Math.random() * pieces_enabled.length);
+            var piece = pieces_enabled[piece_index];
+            this.board[i][j] = piece;
 
-            while(pieces_status[piece] == size){
-               var piece = Math.floor(Math.random() * 4);
+
+            console.log("Pieces Enabled");
+            console.log(pieces_enabled);
+            console.log("Piece Index");
+            console.log(piece_index);
+            console.log("Piece")
+            console.log(piece);
+            console.log("Pieces Controll");
+            console.log(pieces_controll);
+
+            pieces_controll[piece] += 1;
+            if (pieces_controll[piece] == size){
+               pieces_enabled.splice(piece_index, 1);
             }
 
-            this.board[i][j] = pieces_enabled[piece];
 
-            pieces_status[piece]++;
+            /*while(pieces_status[piece] == size){
+               var piece = Math.floor(Math.random() * 4);
+            }*/
+
+         //   this.board[i][j] = pieces_enabled[piece];
+
+          //  pieces_status[piece]++;
 
          }
       }
       console.log(this.board);
+//      return;
 
       //
 
