@@ -142,9 +142,9 @@ ElementalPuzzle.prototype = {
 
       return;*/
 
-      if (size % 2 != 0){
+     /* if (size % 2 != 0){
          throw new Error("O tamanho do tabuleiro deve ser par.")
-      }
+      }*/
 
       this.board = [];
 
@@ -156,12 +156,13 @@ ElementalPuzzle.prototype = {
          "4" : 0
       };
       var pieces_status = [0, 0, 0, 0]
+      var number_of_pieces = 4; //Four Elements
 
-      for (var i = 0; i < size; i++){
+      for (var i = 0; i < number_of_pieces; i++){
 
          this.board[i] = [];
 
-         for (var j = 0; j < size; j++){
+         for (var j = 0; j < (size << 2); j++){
 
             //var piece = Math.floor(Math.random() * 4); CUrrent
             var piece_index = Math.floor(Math.random() * pieces_enabled.length);
@@ -179,7 +180,7 @@ ElementalPuzzle.prototype = {
             console.log(pieces_controll);
 
             pieces_controll[piece] += 1;
-            if (pieces_controll[piece] == size){
+            if (pieces_controll[piece] == (size << 2)){
                pieces_enabled.splice(piece_index, 1);
             }
 
