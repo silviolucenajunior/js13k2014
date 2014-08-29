@@ -68,7 +68,8 @@ ElementalPuzzle.prototype = {
       this.last_selected = null;
 
       if(this._check_victory()){
-         alert("Você Ganhou");
+         alert("You Win");
+         app.screenManager.show("Title");
       }
 
    },

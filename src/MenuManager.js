@@ -45,9 +45,7 @@ MenuManager.prototype = {
    },
    bindGame: function(){
 
-      $("#return-title-btn").bind("click", function(event){
-         event.preventDefault();
-         app.screenManager.show("Title");
-      });
+      var game = new ElementalPuzzle();
+      game.start_board(4);
    }
 };
