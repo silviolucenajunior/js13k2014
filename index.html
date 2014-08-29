@@ -3,7 +3,10 @@
 <head>
    <title>JS13K 2014 - Elemental Puzzle</title>
    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+   <script src="src/ScreenManager.js"></script>
+   <script src="src/MenuManager.js"></script>
    <script src="src/ElementalPuzzle.js"></script>
+   <script src="src/Main.js"></script>
 
    <style type="text/css">
       .piece {
@@ -68,6 +71,10 @@
 </head>
 <body>
 
+   <div id="main-container">
+      <div id="screen"></div>
+   </div>
+<!--
    <div id="board">
       <div id="board-0" class="board-0"></div>
       <div id="board-1" class="board-1"></div>
@@ -75,12 +82,15 @@
       <div id="board-2" class="board-2"></div>
       <div id="board-3" class="board-3"></div>
    </div>
+   -->
 
 
    <script>
+      var app = null;
       (function(){
-         var game = new ElementalPuzzle();
-         game.start_board(4);
+         //var game = new ElementalPuzzle();
+         //game.start_board(4);
+         app = new Main();
       })();
    </script>
 </body>
